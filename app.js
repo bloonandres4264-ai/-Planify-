@@ -1,4 +1,3 @@
-/* Planify · app.js — REST Countries + Open-Meteo (+ Nominatim de respaldo) + localStorage */
 const API_PAISES = "https://restcountries.com/v3.1/all?fields=name,translations,capital,capitalInfo,region,population,flags,languages,currencies,cca3";
 const REGIONES = { Todos: "", Américas: "Americas", Europa: "Europe", Asia: "Asia", África: "Africa", Oceanía: "Oceania" };
 const CLIMA = { 0:"Despejado",1:"Mayormente despejado",2:"Parcialmente nublado",3:"Nublado",45:"Niebla",48:"Niebla",51:"Llovizna",53:"Llovizna",55:"Llovizna",61:"Lluvia ligera",63:"Lluvia",65:"Lluvia fuerte",71:"Nieve",73:"Nieve",75:"Nieve fuerte",80:"Chubascos",81:"Chubascos",82:"Chubascos fuertes",95:"Tormenta",96:"Tormenta",99:"Tormenta" };
@@ -16,7 +15,7 @@ const nombre = (p) => p.translations?.spa?.common || p.name.common;
 const fmt = (n) => new Intl.NumberFormat("es").format(n);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;" }[c]));
 
-/* ---------- Países ---------- */
+// Carga inicial de países
 async function cargarPaises() {
   try {
     const r = await fetch(API_PAISES);
@@ -57,13 +56,14 @@ function pintar() {
   $("#more").hidden = lista.length <= visibles;
 }
 
-/* ---------- Favoritos (localStorage, sin duplicados) ---------- */
+// Gestión de favoritos en localStorage
 function toggleFav(id) {
   let f = store.get("favoritos");
   f = f.includes(id) ? f.filter((x) => x !== id) : [...f, id];
   store.set("favoritos", f);
   pintar(); pintarFavs();
 }
+
 function pintarFavs() {
   const f = store.get("favoritos");
   $("#fav-count").textContent = f.length;
@@ -71,7 +71,7 @@ function pintarFavs() {
   $("#fav-grid").innerHTML = paises.filter((p) => f.includes(p.cca3)).map(tarjeta).join("");
 }
 
-/* ---------- Detalle + clima ---------- */
+// Detalle del país y consulta del clima
 async function coordenadas(p) {
   if (p.capitalInfo?.latlng) return p.capitalInfo.latlng;
   const q = encodeURIComponent(`${p.capital?.[0] || ""} ${p.name.common}`);
@@ -117,7 +117,7 @@ async function abrirDetalle(id) {
   }
 }
 
-/* ---------- Formulario e itinerario ---------- */
+// Validación del formulario e itinerario
 const campos = ["t-name", "t-dest", "t-start", "t-end", "t-people", "t-budget"];
 function validar() {
   let ok = true;
@@ -157,7 +157,7 @@ function pintarViajes() {
   });
 }
 
-/* ---------- Eventos ---------- */
+// Eventos
 document.addEventListener("click", (e) => {
   const b = e.target.closest("button");
   if (!b) return;
