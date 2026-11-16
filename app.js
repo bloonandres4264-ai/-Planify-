@@ -1,4 +1,4 @@
-const API_PAISES = "https://www.apicountries.com/countries";
+const API_PAISES = "https://raw.githubusercontent.com/hengkiardo/restcountries/master/src/data/countriesV3.1.json";
 const REGIONES = { Todos: "", Américas: "Americas", Europa: "Europe", Asia: "Asia", África: "Africa", Oceanía: "Oceania" };
 const CLIMA = { 0:"Despejado",1:"Mayormente despejado",2:"Parcialmente nublado",3:"Nublado",45:"Niebla",48:"Niebla",51:"Llovizna",53:"Llovizna",55:"Llovizna",61:"Lluvia ligera",63:"Lluvia",65:"Lluvia fuerte",71:"Nieve",73:"Nieve",75:"Nieve fuerte",80:"Chubascos",81:"Chubascos",82:"Chubascos fuertes",95:"Tormenta",96:"Tormenta",99:"Tormenta" };
 const PAGE = 12;
