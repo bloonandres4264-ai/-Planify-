@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Planify · Planifica tu viaje</title>
+<meta name="description" content="Explora países, mira el clima, guarda favoritos y arma tu itinerario.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="app.js" defer></script>
+</head>
+<body>
+<header class="nav">
+  <a class="logo" href="#inicio">planify</a>
+  <nav aria-label="Principal">
+    <a href="#explorar">Explorar</a>
+    <a href="#favoritos">Favoritos <span class="badge" id="fav-count">0</span></a>
+    <a href="#planificar">Planificar</a>
+  </nav>
+</header>
+
+<main>
+<section class="hero" id="inicio">
+  <h1>Elige un país.<br>Mira su clima.<br>Arma tu viaje.</h1>
+  <p>Planify junta datos de países y pronóstico del tiempo en un solo lugar para que decidas a dónde ir.</p>
+  <form class="search" id="search-form" role="search">
+    <label class="sr" for="q">Buscar país</label>
+    <input id="q" type="search" placeholder="Prueba con Japón, Colombia o Noruega" autocomplete="off">
+    <button class="btn" type="submit">Buscar destino</button>
+  </form>
+</section>
+
+<section class="block" id="explorar">
+  <div class="head">
+    <h2>Explorar destinos</h2>
+    <div class="filters" id="filters" role="group" aria-label="Filtrar por región"></div>
+  </div>
+  <p class="status" id="status" role="status">Cargando países…</p>
+  <div class="grid" id="grid"></div>
+  <button class="btn ghost" id="more" hidden>Ver más países</button>
+</section>
+
+<section class="block alt" id="favoritos">
+  <h2>Mis favoritos</h2>
+  <p class="status" id="fav-empty">Aún no guardas ninguno. Toca el corazón en un país para añadirlo.</p>
+  <div class="grid" id="fav-grid"></div>
+</section>
+
+<section class="block" id="planificar">
+  <h2>Planificar un viaje</h2>
+  <div class="plan-wrap">
+    <form id="trip-form" novalidate>
+      <div class="field"><label for="t-name">Nombre del viaje</label><input id="t-name" required minlength="3"><small class="err"></small></div>
+      <div class="field"><label for="t-dest">Destino</label><input id="t-dest" list="dest-list" required><datalist id="dest-list"></datalist><small class="err"></small></div>
+      <div class="row">
+        <div class="field"><label for="t-start">Fecha de inicio</label><input id="t-start" type="date" required><small class="err"></small></div>
+        <div class="field"><label for="t-end">Fecha de fin</label><input id="t-end" type="date" required><small class="err"></small></div>
+      </div>
+      <div class="row">
+        <div class="field"><label for="t-people">Viajeros</label><input id="t-people" type="number" min="1" max="20" value="1" required><small class="err"></small></div>
+        <div class="field"><label for="t-budget">Presupuesto (USD)</label><input id="t-budget" type="number" min="0" step="50" required><small class="err"></small></div>
+      </div>
+      <div class="field"><label for="t-notes">Comentarios</label><textarea id="t-notes" rows="3" maxlength="300"></textarea></div>
+      <button class="btn" type="submit">Guardar viaje</button>
+      <p class="ok" id="form-ok" role="status"></p>
+    </form>
+    <div id="trips"><p class="status" id="trips-empty">Tus viajes guardados aparecerán aquí.</p></div>
+  </div>
+</section>
+</main>
+
+<dialog id="detail" aria-labelledby="d-title"></dialog>
+<footer class="foot">Planify · Datos de REST Countries, Open-Meteo y OpenStreetMap</footer>
+</body>
+</html>
